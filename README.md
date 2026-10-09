@@ -1,6 +1,7 @@
 
 ![End-To-End Databricks Pipeline](./images/databricks2.jpg)
-# GHCN Weather Databricks Architecture (Manual VS Lakeflow Pipeline)
+# GHCN Weather Databricks Architecture
+<h3><b>(Manual VS Lakeflow Pipeline)</b></h3>
 
 
 
@@ -9,11 +10,6 @@
 📌Project OverView:
 Weather conditions heavily influence on urban engineers decisions and managdment. This project builds an automated data platform using databricks that ingests raw data from the National Centers for Environmental Information (NCEI / NOAA) into a landing volume , then transfer to bronze layer to convert data raw to delta lake tables . In the silver layer, delta tables undergo  cleaning and filtering while in gold layer, dbt is leveraged for data transformation according to business rules.I previously did end-to-end batch pipeline for GHCN weather dataset including business metrics and  powerBI dashboard (https://github.com/melikakh2024/pipline-weather).
 In this project rather than focusing  on visulization business metrics , I shed light on  comparison between building lakeflow (declarative pipeline  versus manual pipeline)
-
-
-
-🏗️System Architecture:
-
 
 
 🛠️ Tech Stack:
@@ -52,17 +48,48 @@ Gold Layer:
 The main goal of this layer is to apply business rules and calculate business metrics.
  - In the manual implementation, I used dbt to transform the cleaned data into analytical models.
  - In the declarative implementation, dbt is intended to transform the new Silver tables into analytical models
+
+Job and Scheduling layer:
+- In the manual implementation, the processing steps were managed through individual notebooks and explicit execution logic. I defined three tasks for the Bronze layer, configured dependencies for the Silver layer, and connected the Silver layer to dbt.
+
+- In the declarative implementation, Lakeflow Declarative Pipelines automatically manages the execution and dependencies of the defined transformations within the pipeline.
+
+
  ```
-
-
-
-📂 Project Structure:
+📂 Project Structure
+```
 end-to-end-data-pipeline/
-|──────── landing
-|           |──────── landing_weather.ipynb
-|
+├── landing/
+│   └── landing_weather.ipynb
+├── bronze/
+│   ├── manual/
+│   │   ├── bronze_stations.ipynb
+│   │   ├── bronze_countries.ipynb
+│   │   └── bronze_autoloader.ipynb
+│   └── declarative/
+│       └── declarative_bronze.ipynb
+├── silver/
+│   ├── manual/
+│   │   ├── silver_stations.ipynb
+│   │   ├── silver_countries.ipynb
+│   │   └── silver_years.ipynb
+│   └── declarative/
+│       └── declarative_silver.ipynb
+└── dbt/
+    ├── dbt_project.yml
+    └── models/
+        ├── staging/
+        └── mart/
+```
 
 🚀 Quick Start (Run Locally in 3 Steps)
+```
+ - Create a free Databricks account and sign in.
+
+ - Open your Databricks workspace.
+
+ - Import the project notebooks and SQL files.
+````
 
 
 
