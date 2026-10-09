@@ -1,0 +1,13 @@
+sources:
+  - name: silversource
+    database: workspace
+    schema: silverweather
+    tables:
+            - name: years_clean
+              description: "This table contains cleaned weather data for various years."
+            - name: states_clean
+              description: "This table contains information about various states."
+            - name: countries_clean
+              description: "This table contains information about various countries."
+
+
