@@ -1,0 +1,60 @@
+models:
+  - name: years_clean
+    description: "This table contains cleaned weather data for various years."
+    columns:
+      - name: filepath
+      - name: modificationtime
+      - name: ingestiontime
+
+      - name: ID
+        tests:
+          - not_null
+          - relationships:
+              to: source('silversource', 'states_clean')
+              field: ID
+
+      - name: DATE
+        tests:
+          - not_null
+
+      - name: ELEMENT
+        tests:
+          - not_null
+
+      - name: data_VALUE
+        tests:
+          - not_null
+
+  - name: states_clean
+    description: "This table contains information about various states."
+    columns:
+      - name: filepath
+      - name: modificationtime
+      - name: ingestiontime
+
+      - name: ID
+        tests:
+          - not_null
+          - unique
+
+      - name: latitude
+      - name: longitude
+      - name: elevation
+
+  - name: countries_clean
+    description: "This table contains information about various countries."
+    columns:
+      - name: filepath
+      - name: modificationtime
+      - name: ingestiontime
+
+      - name: CODE
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: ['AU', 'AS', 'GM']
+
+      - name: NAME
+        tests:
+          - not_null
